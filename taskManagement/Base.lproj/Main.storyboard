@@ -194,7 +194,9 @@
                             <constraint firstItem="WwA-U4-AGj" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="wNl-Gg-3Zd"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ybk-bW-BGh"/>
+                    <navigationItem key="navigationItem" id="ybk-bW-BGh">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="mtd-NK-Qra"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2s2-T5-bDl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
