@@ -11,6 +11,9 @@ import UIKit
 
 class InputTaskViewController: UIViewController, UITextFieldDelegate {
 
+    //アクティブなテキストフィールドを判断 ****テキストフィールドのスクロールで追加
+    //var textActiveField = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,17 +25,8 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         
     }
 
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    //タスク編集画面スクロールビュー（カテゴリーとか入力するときにキーボードで隠れないようにスクロールさせる。
+    @IBOutlet weak var scrollViewTaskInput: UIScrollView!
 
     //日付設定ピッカー
     @IBOutlet weak var dateSettingPicker: UIDatePicker!
@@ -46,7 +40,14 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //カテゴリー入力フィールド
     @IBOutlet weak var categoryText: UITextField!
     
-    //テキストフィールドを入力したときに実行（タイトル、内容、カテゴリー）
+    
+    //テキストフィールドが入力状態のときに実行 (** UITextField! でなくてもよい？） **テキストフィールドのスクロールで追加
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        textActiveField = textField
+//        return true
+//    }
+    
+    //テキストフィールドに入力完了したときに実行（タイトル、内容、カテゴリー）
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //キーボードを閉じる
         textField.resignFirstResponder()
@@ -59,5 +60,40 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+//    //キーボードがテキストフィールドに重ならないようにする
+//    func handleKeyboardWillShowNotification(notification: NSNotification) {
+//        let userInfo = notification.userInfo!
+//        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+//        let myBoundSize: CGSize = UIScreen.main.bounds.size
+//
+//        let textLimit = textActiveField.frame.origin.y + textActiveField.frame.height + 8.0
+//        let keyboardLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+//
+//        print("テキストフィールドの下辺：\(textLimit)")
+//        print("キーボードの上辺：\(keyboardLimit)")
+//
+//        if textLimit >= keyboardLimit {
+//            scrollViewTaskInput.contentOffset.y = textLimit - keyboardLimit
+//        }
+//    }
+//
+//    func handleKeyboardWillHideNotification(notification: NSNotification) {
+//        scrollViewTaskInput.contentOffset.y = 0
+//    }
+//
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.addObserver(self, selector: #selector(self.handleKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(self.handleKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//
+//        let notificationCenter = NotificationCenter.default
+//        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//    }
     
 }

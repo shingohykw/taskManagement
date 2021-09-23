@@ -127,72 +127,84 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZD-L6-tam">
-                                <rect key="frame" x="20" y="100" width="41" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="xe6-eM-DoV">
-                                <rect key="frame" x="0.0" y="132" width="414" height="216"/>
-                            </datePicker>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タイトル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbO-mC-Bep">
-                                <rect key="frame" x="20" y="356" width="82" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="WwA-U4-AGj">
-                                <rect key="frame" x="20" y="388" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhy-KL-PtS">
-                                <rect key="frame" x="20" y="437" width="41" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="カテゴリー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acN-LP-e6r">
-                                <rect key="frame" x="20" y="518" width="102" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="afL-Lw-o3T">
-                                <rect key="frame" x="20" y="469" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="6sm-Ao-RKh">
-                                <rect key="frame" x="20" y="550" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZR3-Ql-Cjn">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bj-sO-oZ7">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="日付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZD-L6-tam">
+                                                <rect key="frame" x="8" y="8" width="41" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="xe6-eM-DoV">
+                                                <rect key="frame" x="0.0" y="40" width="414" height="216"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </datePicker>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="タイトル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbO-mC-Bep">
+                                                <rect key="frame" x="8" y="264" width="82" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="WwA-U4-AGj">
+                                                <rect key="frame" x="20" y="296" width="374" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhy-KL-PtS">
+                                                <rect key="frame" x="8" y="338" width="41" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="afL-Lw-o3T">
+                                                <rect key="frame" x="20" y="370" width="374" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="カテゴリー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acN-LP-e6r">
+                                                <rect key="frame" x="8" y="412" width="102" height="24"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="6sm-Ao-RKh">
+                                                <rect key="frame" x="20" y="444" width="374" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="9bj-sO-oZ7" firstAttribute="leading" secondItem="NNd-io-Vxb" secondAttribute="leading" id="36y-MH-5OH"/>
+                                    <constraint firstItem="9bj-sO-oZ7" firstAttribute="trailing" secondItem="NNd-io-Vxb" secondAttribute="trailing" id="Qcr-Cj-vPb"/>
+                                    <constraint firstItem="9bj-sO-oZ7" firstAttribute="top" secondItem="NNd-io-Vxb" secondAttribute="top" id="h2z-dn-a7y"/>
+                                    <constraint firstItem="9bj-sO-oZ7" firstAttribute="bottom" secondItem="NNd-io-Vxb" secondAttribute="bottom" id="jQ7-ps-DV5"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="NsA-A7-r2X"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="NNd-io-Vxb"/>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="A6F-nB-vQu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="acN-LP-e6r" firstAttribute="top" secondItem="afL-Lw-o3T" secondAttribute="bottom" constant="15" id="21d-JP-lKV"/>
-                            <constraint firstItem="acN-LP-e6r" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="3hq-Rd-KCg"/>
-                            <constraint firstItem="xe6-eM-DoV" firstAttribute="top" secondItem="vZD-L6-tam" secondAttribute="bottom" constant="8" symbolic="YES" id="4EE-e7-DSQ"/>
-                            <constraint firstItem="lhy-KL-PtS" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="96g-ff-lYj"/>
-                            <constraint firstItem="WwA-U4-AGj" firstAttribute="top" secondItem="DbO-mC-Bep" secondAttribute="bottom" constant="8" symbolic="YES" id="CMG-Si-X5a"/>
-                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="Kai-rZ-IOl"/>
-                            <constraint firstItem="afL-Lw-o3T" firstAttribute="top" secondItem="lhy-KL-PtS" secondAttribute="bottom" constant="8" symbolic="YES" id="On7-8W-aTM"/>
-                            <constraint firstItem="lhy-KL-PtS" firstAttribute="top" secondItem="WwA-U4-AGj" secondAttribute="bottom" constant="15" id="Ucg-1u-wEx"/>
-                            <constraint firstItem="xe6-eM-DoV" firstAttribute="trailing" secondItem="A6F-nB-vQu" secondAttribute="trailing" id="WSm-Yc-Mka"/>
-                            <constraint firstItem="DbO-mC-Bep" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="X8N-CJ-PgY"/>
-                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="afL-Lw-o3T" secondAttribute="trailing" constant="20" id="ZlB-ay-HKa"/>
-                            <constraint firstItem="afL-Lw-o3T" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="aVL-gA-hsd"/>
-                            <constraint firstItem="DbO-mC-Bep" firstAttribute="top" secondItem="xe6-eM-DoV" secondAttribute="bottom" constant="8" symbolic="YES" id="feV-Es-Sbp"/>
-                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="WwA-U4-AGj" secondAttribute="trailing" constant="20" id="hjn-1L-nnD"/>
-                            <constraint firstItem="vZD-L6-tam" firstAttribute="top" secondItem="A6F-nB-vQu" secondAttribute="top" constant="12" id="kCH-Zu-yNt"/>
-                            <constraint firstItem="xe6-eM-DoV" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" id="mDO-NS-12Z"/>
-                            <constraint firstItem="vZD-L6-tam" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="mZF-iG-p8H"/>
-                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="top" secondItem="acN-LP-e6r" secondAttribute="bottom" constant="8" id="qYo-SW-sAP"/>
-                            <constraint firstItem="WwA-U4-AGj" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="wNl-Gg-3Zd"/>
-                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="6sm-Ao-RKh" secondAttribute="trailing" constant="20" id="z7F-AE-pQh"/>
+                            <constraint firstItem="ZR3-Ql-Cjn" firstAttribute="trailing" secondItem="A6F-nB-vQu" secondAttribute="trailing" id="RKB-e1-etW"/>
+                            <constraint firstItem="ZR3-Ql-Cjn" firstAttribute="top" secondItem="A6F-nB-vQu" secondAttribute="top" id="bbI-gA-YUB"/>
+                            <constraint firstItem="9bj-sO-oZ7" firstAttribute="width" secondItem="MKi-Sr-dPL" secondAttribute="width" id="jck-M2-t59"/>
+                            <constraint firstAttribute="bottom" secondItem="ZR3-Ql-Cjn" secondAttribute="bottom" id="kqy-Vn-T0f"/>
+                            <constraint firstItem="ZR3-Ql-Cjn" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" id="wxu-8L-pIC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ybk-bW-BGh">
@@ -202,6 +214,7 @@
                         <outlet property="categoryText" destination="6sm-Ao-RKh" id="NGE-75-5LT"/>
                         <outlet property="contentText" destination="afL-Lw-o3T" id="2cs-vF-9xz"/>
                         <outlet property="dateSettingPicker" destination="xe6-eM-DoV" id="h4A-yW-QyB"/>
+                        <outlet property="scrollViewTaskInput" destination="ZR3-Ql-Cjn" id="65M-dH-PhO"/>
                         <outlet property="titleText" destination="WwA-U4-AGj" id="qGL-lX-5K5"/>
                     </connections>
                 </viewController>
