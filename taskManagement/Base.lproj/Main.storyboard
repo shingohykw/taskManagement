@@ -105,7 +105,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kWC-Sq-zbp">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nsu-mf-Trd"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nsu-mf-Trd">
+                            <connections>
+                                <action selector="inputTaskButtonAction:" destination="BYZ-38-t0r" id="8N2-lH-qeq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="770-Sf-rmC" kind="show" identifier="goTaskInput" id="xqN-sS-3NC"/>
@@ -129,7 +133,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xe6-eM-DoV">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="xe6-eM-DoV">
                                 <rect key="frame" x="0.0" y="132" width="414" height="216"/>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="タイトル" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbO-mC-Bep">
@@ -149,22 +153,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ftx-kD-Hev">
-                                <rect key="frame" x="20" y="469" width="374" height="128"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="カテゴリー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acN-LP-e6r">
-                                <rect key="frame" x="20" y="613" width="102" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="カテゴリー" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acN-LP-e6r">
+                                <rect key="frame" x="20" y="518" width="102" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6sm-Ao-RKh">
-                                <rect key="frame" x="20" y="645" width="374" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="afL-Lw-o3T">
+                                <rect key="frame" x="20" y="469" width="374" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6sm-Ao-RKh">
+                                <rect key="frame" x="20" y="550" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -172,26 +173,26 @@
                         <viewLayoutGuide key="safeArea" id="A6F-nB-vQu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="acN-LP-e6r" firstAttribute="top" secondItem="ftx-kD-Hev" secondAttribute="bottom" constant="16" id="2QZ-nb-nho"/>
+                            <constraint firstItem="acN-LP-e6r" firstAttribute="top" secondItem="afL-Lw-o3T" secondAttribute="bottom" constant="15" id="21d-JP-lKV"/>
+                            <constraint firstItem="acN-LP-e6r" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="3hq-Rd-KCg"/>
                             <constraint firstItem="xe6-eM-DoV" firstAttribute="top" secondItem="vZD-L6-tam" secondAttribute="bottom" constant="8" symbolic="YES" id="4EE-e7-DSQ"/>
                             <constraint firstItem="lhy-KL-PtS" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="96g-ff-lYj"/>
                             <constraint firstItem="WwA-U4-AGj" firstAttribute="top" secondItem="DbO-mC-Bep" secondAttribute="bottom" constant="8" symbolic="YES" id="CMG-Si-X5a"/>
-                            <constraint firstItem="acN-LP-e6r" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="EA1-ch-Y9f"/>
-                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="6sm-Ao-RKh" secondAttribute="trailing" constant="20" id="J9y-Jh-Njc"/>
-                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="ftx-kD-Hev" secondAttribute="trailing" constant="20" id="JKO-IL-ivH"/>
-                            <constraint firstItem="ftx-kD-Hev" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="LDk-eo-UWN"/>
-                            <constraint firstItem="ftx-kD-Hev" firstAttribute="top" secondItem="lhy-KL-PtS" secondAttribute="bottom" constant="8" symbolic="YES" id="LIj-d0-fwh"/>
-                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="Nev-gO-fk5"/>
+                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="Kai-rZ-IOl"/>
+                            <constraint firstItem="afL-Lw-o3T" firstAttribute="top" secondItem="lhy-KL-PtS" secondAttribute="bottom" constant="8" symbolic="YES" id="On7-8W-aTM"/>
                             <constraint firstItem="lhy-KL-PtS" firstAttribute="top" secondItem="WwA-U4-AGj" secondAttribute="bottom" constant="15" id="Ucg-1u-wEx"/>
                             <constraint firstItem="xe6-eM-DoV" firstAttribute="trailing" secondItem="A6F-nB-vQu" secondAttribute="trailing" id="WSm-Yc-Mka"/>
                             <constraint firstItem="DbO-mC-Bep" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="X8N-CJ-PgY"/>
-                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="top" secondItem="acN-LP-e6r" secondAttribute="bottom" constant="8" symbolic="YES" id="bHM-LM-pfR"/>
+                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="afL-Lw-o3T" secondAttribute="trailing" constant="20" id="ZlB-ay-HKa"/>
+                            <constraint firstItem="afL-Lw-o3T" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="aVL-gA-hsd"/>
                             <constraint firstItem="DbO-mC-Bep" firstAttribute="top" secondItem="xe6-eM-DoV" secondAttribute="bottom" constant="8" symbolic="YES" id="feV-Es-Sbp"/>
                             <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="WwA-U4-AGj" secondAttribute="trailing" constant="20" id="hjn-1L-nnD"/>
                             <constraint firstItem="vZD-L6-tam" firstAttribute="top" secondItem="A6F-nB-vQu" secondAttribute="top" constant="12" id="kCH-Zu-yNt"/>
                             <constraint firstItem="xe6-eM-DoV" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" id="mDO-NS-12Z"/>
                             <constraint firstItem="vZD-L6-tam" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="mZF-iG-p8H"/>
+                            <constraint firstItem="6sm-Ao-RKh" firstAttribute="top" secondItem="acN-LP-e6r" secondAttribute="bottom" constant="8" id="qYo-SW-sAP"/>
                             <constraint firstItem="WwA-U4-AGj" firstAttribute="leading" secondItem="A6F-nB-vQu" secondAttribute="leading" constant="20" id="wNl-Gg-3Zd"/>
+                            <constraint firstItem="A6F-nB-vQu" firstAttribute="trailing" secondItem="6sm-Ao-RKh" secondAttribute="trailing" constant="20" id="z7F-AE-pQh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ybk-bW-BGh">
@@ -222,9 +223,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
