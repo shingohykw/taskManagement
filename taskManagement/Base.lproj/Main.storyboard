@@ -208,7 +208,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ybk-bW-BGh">
-                        <barButtonItem key="rightBarButtonItem" title="保存" id="mtd-NK-Qra"/>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="mtd-NK-Qra">
+                            <connections>
+                                <action selector="saveTaskButtonAction:" destination="770-Sf-rmC" id="6XE-QC-5MF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="categoryText" destination="6sm-Ao-RKh" id="NGE-75-5LT"/>
