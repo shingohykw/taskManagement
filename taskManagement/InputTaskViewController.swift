@@ -26,6 +26,10 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //アクティブなテキストフィールドを判断 ****テキストフィールドのスクロールで追加
     //var textActiveField = UITextField()
     
+    //Realmデータベースを取得
+    let realm = try! Realm()
+    //モデルクラス（taskDB)をインスタンス化
+    let taskDBInstance: taskDB = taskDB()  //????
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +46,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
 
     //保存ボタン押下時アクション
     @IBAction func saveTaskButtonAction(_ sender: Any) {
-        //モデルクラス（taskDB)をインスタンス化
-        let taskDBInstance: taskDB = taskDB()  //????
+     
                 
         //タスク日付取得
         let date: Date = dateSettingPicker.date
@@ -70,8 +73,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDBInstance.category = category
         }
         
-        //Realmデータベースを取得
-        let realm = try! Realm()
+       
         
         //Realmにデータを追加
         try! realm.write {

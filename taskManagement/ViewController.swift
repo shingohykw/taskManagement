@@ -9,21 +9,24 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UITableViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //タスク一覧紐付け
   //  @IBOutlet weak var taskTable: UITableView!
     
+    //Realmのインスタンスを取得
+    let realm = try! Realm()
     //Realmから受け取るデータを入れる変数を準備
-    var taskList: Results<taskDB>!
+    var taskList = try! Realm().objects(taskDB.self)
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         // Do any additional setup after loading the view.
-        //Realmのインスタンスを取得
-        let realm = try! Realm()
-        taskList = realm.objects(taskDB.self)
-    //    taskTable.reloadData()
         
     }
     
@@ -34,11 +37,11 @@ class ViewController: UITableViewController {
         performSegue(withIdentifier: "goTaskInput", sender: nil)
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return taskList.count
    }
    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
        
        let task = taskList[indexPath.row]
