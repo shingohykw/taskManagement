@@ -29,7 +29,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //Realmデータベースを取得
     let realm = try! Realm()
     //モデルクラス（taskDB)をインスタンス化
-    let taskDBInstance: taskDB = taskDB()  //????
+    let taskDB: TaskDB = TaskDB()  //????
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,18 +40,16 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         contentText.delegate = self     //内容
         categoryText.delegate = self    //カテゴリー
         
-       
-        
     }
 
     //保存ボタン押下時アクション
     @IBAction func saveTaskButtonAction(_ sender: Any) {
      
-                
+            
         //タスク日付取得
         let date: Date = dateSettingPicker.date
             print(date)
-            taskDBInstance.date = date
+            taskDB.date = date
 //        //タスクタイトル取得 エラー
 //        let title: String = titleText.text
 //            print(title)
@@ -60,36 +58,33 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         //タスクタイトル取得
         if let title = titleText.text {
             print(title)
-            taskDBInstance.title = title
+            taskDB.title = title
         }
         //タスク内容取得
         if let content = contentText.text {
             print(content)
-            taskDBInstance.content = content
+            taskDB.content = content
         }
         //カテゴリー取得
         if let category = categoryText.text {
             print(category)
-            taskDBInstance.category = category
+            taskDB.category = category
         }
         
        
         
         //Realmにデータを追加
         try! realm.write {
-            realm.add(taskDBInstance)
+            realm.add(taskDB)
         }
         
         //前画面に戻る
         _ = navigationController?.popViewController(animated: true)
+        
+        
     }
     
     
-    //テキストフィールドが入力状態のときに実行 (** UITextField! でなくてもよい？） **テキストフィールドのスクロールで追加
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        textActiveField = textField
-//        return true
-//    }
     
     //テキストフィールドに入力完了したときに実行（タイトル、内容、カテゴリー）
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -104,40 +99,6 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-//    //キーボードがテキストフィールドに重ならないようにする
-//    func handleKeyboardWillShowNotification(notification: NSNotification) {
-//        let userInfo = notification.userInfo!
-//        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-//        let myBoundSize: CGSize = UIScreen.main.bounds.size
-//
-//        let textLimit = textActiveField.frame.origin.y + textActiveField.frame.height + 8.0
-//        let keyboardLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
-//
-//        print("テキストフィールドの下辺：\(textLimit)")
-//        print("キーボードの上辺：\(keyboardLimit)")
-//
-//        if textLimit >= keyboardLimit {
-//            scrollViewTaskInput.contentOffset.y = textLimit - keyboardLimit
-//        }
-//    }
-//
-//    func handleKeyboardWillHideNotification(notification: NSNotification) {
-//        scrollViewTaskInput.contentOffset.y = 0
-//    }
-//
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//
-//        let notificationCenter = NotificationCenter.default
-//        notificationCenter.addObserver(self, selector: #selector(self.handleKeyboardWillShowNotification(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        notificationCenter.addObserver(self, selector: #selector(self.handleKeyboardWillHideNotification(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//
-//        let notificationCenter = NotificationCenter.default
-//        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//        notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//    }
+
     
 }

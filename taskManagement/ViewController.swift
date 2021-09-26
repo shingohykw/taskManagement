@@ -11,14 +11,11 @@ import RealmSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    //タスク一覧紐付け
-  //  @IBOutlet weak var taskTable: UITableView!
-    
     //Realmのインスタンスを取得
     let realm = try! Realm()
     //Realmから受け取るデータを入れる変数を準備
-    var taskList = try! Realm().objects(taskDB.self)
-
+    var taskList = try! Realm().objects(TaskDB.self)
+    //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {

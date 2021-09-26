@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 //タスク項目定義
-class taskDB: Object {
+class TaskDB: Object {
     @objc dynamic var taskID: Int = 0           //タスクID
     @objc dynamic var date: Date = Date()       //日付
     @objc dynamic var title: String = ""        //タイトル
