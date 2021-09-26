@@ -33,20 +33,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //画面遷移を行う(データ渡すときにnilを変更する。）
         performSegue(withIdentifier: "goTaskInput", sender: nil)
     }
-
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return taskList.count
-   }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return taskList.count
+    }
    
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
-       
-       let task = taskList[indexPath.row]
-       
-       cell.cellTitle.text = task.title
-       
-       return cell
-   }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
+        
+        let task = taskList[indexPath.row]
+        
+        cell.cellTitle.text = task.title
+        cell.cellContent.text = task.content
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        cell.cellDate.text = dateFormatter.string(from: task.date)
+        
+        
+        
+        return cell
+    }
     
     
 }
