@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" rowHeight="111" id="O3C-oR-n8Y">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskCell" rowHeight="111" id="O3C-oR-n8Y" customClass="TaskListCell" customModule="taskManagement" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="111"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O3C-oR-n8Y" id="R8U-Ld-Y0h">
@@ -88,6 +88,11 @@
                                                 <constraint firstItem="qXa-zS-ZBi" firstAttribute="top" secondItem="UL0-Mh-w9D" secondAttribute="bottom" constant="13" id="zNV-BT-nyv"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellContent" destination="lhS-cq-l9L" id="bX3-fy-3EK"/>
+                                            <outlet property="cellDate" destination="UL0-Mh-w9D" id="e03-q2-pK6"/>
+                                            <outlet property="cellTitle" destination="qXa-zS-ZBi" id="PCj-SI-sZe"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -107,11 +112,12 @@
                     <navigationItem key="navigationItem" id="kWC-Sq-zbp">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nsu-mf-Trd">
                             <connections>
-                                <action selector="inputTaskButtonAction:" destination="BYZ-38-t0r" id="8N2-lH-qeq"/>
+                                <action selector="inputTaskButtonAction:" destination="BYZ-38-t0r" id="1aK-mj-MKk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="taskTable" destination="2T3-h1-UX9" id="J0u-8y-ie0"/>
                         <segue destination="770-Sf-rmC" kind="show" identifier="goTaskInput" id="xqN-sS-3NC"/>
                     </connections>
                 </viewController>
