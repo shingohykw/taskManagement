@@ -9,10 +9,10 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     //タスク一覧紐付け
-    @IBOutlet weak var taskTable: UITableView!
+  //  @IBOutlet weak var taskTable: UITableView!
     
     //Realmから受け取るデータを入れる変数を準備
     var taskList: Results<taskDB>!
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         //Realmのインスタンスを取得
         let realm = try! Realm()
         taskList = realm.objects(taskDB.self)
-        taskTable.reloadData()
+    //    taskTable.reloadData()
         
     }
     
@@ -34,26 +34,20 @@ class ViewController: UIViewController {
         performSegue(withIdentifier: "goTaskInput", sender: nil)
     }
 
-}
-
-
-
-extension ViewController: UITableViewDataSource {
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList.count
-    }
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return taskList.count
+   }
+   
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
+       
+       let task = taskList[indexPath.row]
+       
+       cell.cellTitle.text = task.title
+       
+       return cell
+   }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
-        
-        let task = taskList[indexPath.row]
-        
-        cell.cellTitle.text = task.title
-        
-        return cell
-    }
     
 }
-
-
 
