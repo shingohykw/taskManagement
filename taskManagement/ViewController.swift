@@ -11,8 +11,7 @@ import RealmSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    //Realmのインスタンスを取得
-    let realm = try! Realm()
+    
     //Realmから受け取るデータを入れる変数を準備
     var taskList = try! Realm().objects(TaskDB.self)
     //タスク一覧紐付け
@@ -24,7 +23,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         
         // Do any additional setup after loading the view.
-        
+    }
+    
+    //viewWillAppearは遷移されるたびに実行されるのでここでtableViewを再読み込みする。
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     
@@ -33,11 +36,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //画面遷移を行う(データ渡すときにnilを変更する。）
         performSegue(withIdentifier: "goTaskInput", sender: nil)
     }
-    
+    //タスク一覧の行数取得
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList.count
     }
-   
+    //特定のセルデータを取得？
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
         

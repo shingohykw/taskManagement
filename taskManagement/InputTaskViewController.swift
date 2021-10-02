@@ -29,7 +29,16 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //Realmデータベースを取得
     let realm = try! Realm()
     //モデルクラス（taskDB)をインスタンス化
-    let taskDB: TaskDB = TaskDB()  //????
+    let taskDB: TaskDB = TaskDB()
+    
+    //Realmから受け取るデータを入れる変数を準備　（ここで2個めのRealmのインスタンスを作るのは無駄？？？？
+    var taskList = try! Realm().objects(TaskDB.self)
+    
+    //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return taskList.count
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +80,8 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.category = category
         }
         
-       
+        //taskID更新
+        taskDB.taskID += taskList.count + 1
         
         //Realmにデータを追加
         try! realm.write {
