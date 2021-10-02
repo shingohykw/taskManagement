@@ -11,7 +11,6 @@ import RealmSwift
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    
     //Realmから受け取るデータを入れる変数を準備
     var taskList = try! Realm().objects(TaskDB.self)
     //タスク一覧紐付け
@@ -29,7 +28,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
-    
+
+    //タップした行を更新
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //タップしたセルの行番号を出力
+        print("\(indexPath.row)番目の行が選択されました")
+        //タップしたセルのデータを取得して詳細画面へ遷移するようにする。
+        let cell = self.tableView.cellForRow(at: indexPath) as! TaskListCell
+        print(String(describing: cell.cellTitle.text))
+        
+        
+        //タスク詳細画面に遷移
+        performSegue(withIdentifier: "goTaskInput", sender: nil)
+    }
     
 //タスク入力画面へ遷移
     @IBAction func inputTaskButtonAction(_ sender: Any) {
@@ -40,8 +51,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList.count
     }
-    //特定のセルデータを取得？
+    //各セルを生成して返却する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //セルの再利用を行う。
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
         
         let task = taskList[indexPath.row]
@@ -52,8 +64,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         cell.cellDate.text = dateFormatter.string(from: task.date)
-        
-        
         
         return cell
     }
