@@ -29,7 +29,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //Realmデータベースを取得
     let realm = try! Realm()
     //モデルクラス（taskDB)をインスタンス化
-    let taskDB: TaskDB = TaskDB()
+    var taskDB: TaskDB = TaskDB()
     
     //Realmから受け取るデータを入れる変数を準備　（ここで2個めのRealmのインスタンスを作るのは無駄？？？？
     var taskList = try! Realm().objects(TaskDB.self)
@@ -39,6 +39,21 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         return taskList.count
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        //タスク一覧画面で選んだセルのタスクIDを取得
+//        print(taskDB.taskID)
+//        let taskID: Int = taskDB.taskID
+//
+//        //RealmからタスクIDで一致するレコードを取得。
+//        let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
+//        print(selectedData)
+//        //取得したレコードを画面へ反映
+//        titleText.text = taskDB.title
+//        contentText.text = taskDB.content
+//        categoryText.text = taskDB.category
+//        self.viewDidLoad()
+//
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +63,19 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         titleText.delegate = self       //タイトル
         contentText.delegate = self     //内容
         categoryText.delegate = self    //カテゴリー
+        
+        //タスク一覧画面で選んだセルのタスクIDを取得
+        print(taskDB.taskID)
+        let taskID: Int = taskDB.taskID
+        //RealmからタスクIDで一致するレコードを取得。
+        let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
+        print(selectedData)
+        //取得したレコードを画面へ反映
+        titleText.text = selectedData.title
+        
+        
+        
+        
         
     }
 

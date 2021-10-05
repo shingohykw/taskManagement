@@ -36,10 +36,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //タップしたセルのデータを取得して詳細画面へ遷移するようにする。
         let cell = self.tableView.cellForRow(at: indexPath) as! TaskListCell
         print(String(describing: cell.cellTitle.text))
+        //タップしたセルのtaskIDを取得
+        let taskID = taskList[indexPath.row].taskID
+        print(String(describing: taskID))
         
-        
-        //タスク詳細画面に遷移
-        performSegue(withIdentifier: "goTaskInput", sender: nil)
+        //タスク詳細画面に遷移。引数にtaskIDを指定
+        performSegue(withIdentifier: "goTaskInput", sender: taskID)
+    }
+    
+    //prepareは画面遷移前に実行される。
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //タスク入力画面に遷移する場合はtaskID(sender)をタスク入力画面へ渡す。
+        if segue.identifier == "goTaskInput" {
+            let inputTaskViewController = segue.destination as! InputTaskViewController
+            //タスク新規作成時はtaskIDないのでif let使う
+            if let taskID = sender {
+                inputTaskViewController.taskDB.taskID = taskID as! Int
+            }
+            
+        }
     }
     
 //タスク入力画面へ遷移
