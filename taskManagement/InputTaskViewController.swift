@@ -29,31 +29,17 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //Realmデータベースを取得
     let realm = try! Realm()
     //モデルクラス（taskDB)をインスタンス化
-    var taskDB: TaskDB = TaskDB()
+    let taskDB: TaskDB = TaskDB()
     
     //Realmから受け取るデータを入れる変数を準備　（ここで2個めのRealmのインスタンスを作るのは無駄？？？？
-    var taskList = try! Realm().objects(TaskDB.self)
+    let taskList = try! Realm().objects(TaskDB.self)
+    
     
     //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList.count
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        //タスク一覧画面で選んだセルのタスクIDを取得
-//        print(taskDB.taskID)
-//        let taskID: Int = taskDB.taskID
-//
-//        //RealmからタスクIDで一致するレコードを取得。
-//        let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
-//        print(selectedData)
-//        //取得したレコードを画面へ反映
-//        titleText.text = taskDB.title
-//        contentText.text = taskDB.content
-//        categoryText.text = taskDB.category
-//        self.viewDidLoad()
-//
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,34 +51,31 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         categoryText.delegate = self    //カテゴリー
         
         //タスク一覧画面で選んだセルのタスクIDを取得
-        print(taskDB.taskID)
         let taskID: Int = taskDB.taskID
-        //RealmからタスクIDで一致するレコードを取得。
-        let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
-        print(selectedData)
-        //取得したレコードを画面へ反映
-        dateSettingPicker.date = selectedData[0].date
-        titleText.text = selectedData[0].title
-        contentText.text = selectedData[0].content
-        categoryText.text = selectedData[0].category
         
-        
-        
+        if taskID != 0 {
+            //RealmからタスクIDで一致するレコードを取得。
+            let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
+            print(selectedData)
+            //取得したレコードを画面へ反映
+            dateSettingPicker.date = selectedData[0].date
+            titleText.text = selectedData[0].title
+            contentText.text = selectedData[0].content
+            categoryText.text = selectedData[0].category
+            
+        }
         
     }
 
     //保存ボタン押下時アクション
     @IBAction func saveTaskButtonAction(_ sender: Any) {
-     
-            
+        
+        let taskID: Int = taskDB.taskID
+        
         //タスク日付取得
         let date: Date = dateSettingPicker.date
             print(date)
             taskDB.date = date
-//        //タスクタイトル取得 エラー
-//        let title: String = titleText.text
-//            print(title)
-//            taskDBInstance.title = title
         
         //タスクタイトル取得
         if let title = titleText.text {
@@ -110,8 +93,13 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.category = category
         }
         
-        //taskID更新
-        taskDB.taskID += taskList.count + 1
+        //タスク新規作成時はタスクIDを新規採番する。
+        if taskID == 0 {
+            //最新のタスクID取得
+            let latestTask: TaskDB = taskList.sorted(byKeyPath: "taskID", ascending: false).first!
+            //新規タスクID採番（最新＋１）
+            taskDB.taskID += latestTask.taskID + 1
+        }
         
         //Realmにデータを追加
         try! realm.write {
@@ -120,7 +108,6 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         
         //前画面に戻る
         _ = navigationController?.popViewController(animated: true)
-        
         
     }
     

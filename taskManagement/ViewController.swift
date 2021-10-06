@@ -15,12 +15,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var taskList = try! Realm().objects(TaskDB.self)
     //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
+    //タスク入力画面へ遷移
+    @IBAction func inputTaskButtonAction(_ sender: Any) {
+        //タスク新規作成時はtaskID = 0。
+        let taskID: Int = 0
+        //画面遷移を行う(データ渡すときにnilを変更する。）
+        performSegue(withIdentifier: "goTaskInput", sender: taskID)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
         // Do any additional setup after loading the view.
     }
     
@@ -49,19 +55,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //タスク入力画面に遷移する場合はtaskID(sender)をタスク入力画面へ渡す。
         if segue.identifier == "goTaskInput" {
             let inputTaskViewController = segue.destination as! InputTaskViewController
-            //タスク新規作成時はtaskIDないのでif let使う
+            
             if let taskID = sender {
                 inputTaskViewController.taskDB.taskID = taskID as! Int
             }
-            
         }
     }
     
-//タスク入力画面へ遷移
-    @IBAction func inputTaskButtonAction(_ sender: Any) {
-        //画面遷移を行う(データ渡すときにnilを変更する。）
-        performSegue(withIdentifier: "goTaskInput", sender: nil)
-    }
+
+    
     //タスク一覧の行数取得
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskList.count
