@@ -71,8 +71,10 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         let selectedData = realm.objects(TaskDB.self).filter("taskID == %@", taskID)
         print(selectedData)
         //取得したレコードを画面へ反映
-        titleText.text = selectedData.title
-        
+        dateSettingPicker.date = selectedData[0].date
+        titleText.text = selectedData[0].title
+        contentText.text = selectedData[0].content
+        categoryText.text = selectedData[0].category
         
         
         
