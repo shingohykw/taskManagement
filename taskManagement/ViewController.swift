@@ -12,7 +12,7 @@ import RealmSwift
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //Realmから受け取るデータを入れる変数を準備
-    var taskList = try! Realm().objects(TaskDB.self)
+    var realm = try! Realm()
     //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
     //タスク入力画面へ遷移
@@ -43,7 +43,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = self.tableView.cellForRow(at: indexPath) as! TaskListCell
         print(String(describing: cell.cellTitle.text))
         //タップしたセルのtaskIDを取得
-        let taskID = taskList[indexPath.row].taskID
+        let taskID = realm.objects(TaskDB.self)[indexPath.row].taskID
         print(String(describing: taskID))
         
         //タスク詳細画面に遷移。引数にtaskIDを指定
@@ -66,14 +66,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //タスク一覧の行数取得
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList.count
+        return realm.objects(TaskDB.self).count
     }
     //各セルを生成して返却する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの再利用を行う。
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
         
-        let task = taskList[indexPath.row]
+        let task = realm.objects(TaskDB.self)[indexPath.row]
         
         cell.cellTitle.text = task.title
         cell.cellContent.text = task.content
@@ -84,6 +84,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
+    
+    //セルを右から左へスワイプしたときに削除ボタンを表示させ、タップすると削除する。
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "削除") {(action, view, completionHandler) in
+            //削除処理を記述
+            do {
+                //タップしたセルのtaskを取得し削除
+                let task: TaskDB = self.realm.objects(TaskDB.self)[indexPath.row]
+                try self.realm.write{
+                    self.realm.delete(task)
+                }
+            } catch {
+                return
+            }
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+            completionHandler(true)
+        }
+        //削除ボタンは赤色
+        deleteAction.backgroundColor = UIColor.red
+        //定義したアクション（削除）をセット
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+        
+    }
+    
+    
     
     
 }

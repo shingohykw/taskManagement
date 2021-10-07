@@ -31,13 +31,9 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //モデルクラス（taskDB)をインスタンス化
     let taskDB: TaskDB = TaskDB()
     
-    //Realmから受け取るデータを入れる変数を準備　（ここで2個めのRealmのインスタンスを作るのは無駄？？？？
-    let taskList = try! Realm().objects(TaskDB.self)
-    
-    
     //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskList.count
+        return realm.objects(TaskDB.self).count
     }
     
     
@@ -93,12 +89,22 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.category = category
         }
         
+        
         //タスク新規作成時はタスクIDを新規採番する。
         if taskID == 0 {
-            //最新のタスクID取得
-            let latestTask: TaskDB = taskList.sorted(byKeyPath: "taskID", ascending: false).first!
+            //データ数取得
+            let dataCount = realm.objects(TaskDB.self).count
+            
+            if dataCount == 0 {
+             //データ件数０で新規タスク作成の場合
+                taskDB.taskID = 1
+                
+            } else {
+            //最新のタスクID取得(データ件数が０のときlatestTaskがnilになって実行時エラーになるのを防ぐ）
+            let latestTask: TaskDB = realm.objects(TaskDB.self).sorted(byKeyPath: "taskID", ascending: false).first!
             //新規タスクID採番（最新＋１）
             taskDB.taskID += latestTask.taskID + 1
+            }
         }
         
         //Realmにデータを追加、更新（同じIDがあるときは更新する。）
