@@ -101,9 +101,9 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.taskID += latestTask.taskID + 1
         }
         
-        //Realmにデータを追加
+        //Realmにデータを追加、更新（同じIDがあるときは更新する。）
         try! realm.write {
-            realm.add(taskDB)
+            realm.add(taskDB, update: .modified)
         }
         
         //前画面に戻る
