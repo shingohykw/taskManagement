@@ -117,6 +117,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchText" destination="Rlo-qa-bhl" id="k7R-1d-jc0"/>
                         <outlet property="tableView" destination="2T3-h1-UX9" id="jsk-MZ-4JU"/>
                         <segue destination="770-Sf-rmC" kind="show" identifier="goTaskInput" id="xqN-sS-3NC"/>
                     </connections>

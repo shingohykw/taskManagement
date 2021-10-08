@@ -9,10 +9,13 @@
 import UIKit
 import RealmSwift
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     //Realmから受け取るデータを入れる変数を準備
     var realm = try! Realm()
+    //検索バーのテキスト格納用変数
+    var searchWord: String?
+    
     //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
     //タスク入力画面へ遷移
@@ -22,12 +25,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         //画面遷移を行う(データ渡すときにnilを変更する。）
         performSegue(withIdentifier: "goTaskInput", sender: taskID)
     }
+    //検索バー
+    @IBOutlet weak var searchText: UISearchBar!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
+        searchText.delegate = self
+        searchText.placeholder = "カテゴリーを入力してください"
     }
     
     //viewWillAppearは遷移されるたびに実行されるのでここでtableViewを再読み込みする。
@@ -37,13 +45,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //タップした行を更新
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //キーボードを閉じる（検索バー触るとキーボードが出てる状態になるため）
+        view.endEditing(true)
         //タップしたセルの行番号を出力
         print("\(indexPath.row)番目の行が選択されました")
-        //タップしたセルのデータを取得して詳細画面へ遷移するようにする。
-        let cell = self.tableView.cellForRow(at: indexPath) as! TaskListCell
-        print(String(describing: cell.cellTitle.text))
-        //タップしたセルのtaskIDを取得
-        let taskID = realm.objects(TaskDB.self)[indexPath.row].taskID
+ 
+        //タップしたセルのtaskIDを取得(日付順に並び替える）
+        let taskID = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)[indexPath.row].taskID
         print(String(describing: taskID))
         
         //タスク詳細画面に遷移。引数にtaskIDを指定
@@ -72,8 +80,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの再利用を行う。
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
-        
-        let task = realm.objects(TaskDB.self)[indexPath.row]
+        //セルを日付順に並び替え
+        let sortedRealm = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)
+        let task = sortedRealm[indexPath.row]
         
         cell.cellTitle.text = task.title
         cell.cellContent.text = task.content
@@ -108,7 +117,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    
+    //検索ボタンをクリックしたとき実行
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //キーボードを閉じる
+        view.endEditing(true)
+        searchWord = searchBar.text
+        print(searchWord)
+        
+        //func tableviewを呼び出す？引数はsearchWord? override or extension ?
+    }
     
     
 }
