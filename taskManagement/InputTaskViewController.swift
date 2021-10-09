@@ -46,6 +46,9 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         contentText.delegate = self     //内容
         categoryText.delegate = self    //カテゴリー
         
+        //テキストボックス以外の場所をタップしたときにキーボードを閉じる。
+        setDismissKeyboard()
+        
         //タスク一覧画面で選んだセルのタスクIDを取得
         let taskID: Int = taskDB.taskID
         
