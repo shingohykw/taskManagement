@@ -13,8 +13,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //Realmから受け取るデータを入れる変数を準備
     var realm = try! Realm()
-    //検索バーのテキスト格納用変数
-    var searchWord: String?
+    var searchWord: String? = ""
+    
+//    //検索バーのテキスト格納用変数
+//    var searchWord: String?
     
     //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
@@ -74,14 +76,30 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //タスク一覧の行数取得
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return realm.objects(TaskDB.self).count
+        var realmCount: Int
+        //検索の有無によって行数調整
+        if searchWord == "" {
+            realmCount = realm.objects(TaskDB.self).count
+        } else {
+            realmCount = realm.objects(TaskDB.self).filter("category = %@", searchWord!).sorted(byKeyPath: "date", ascending: true).count
+        }
+        return realmCount
     }
+    
     //各セルを生成して返却する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの再利用を行う。
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
-        //セルを日付順に並び替え
-        let sortedRealm = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)
+        
+        var sortedRealm = realm.objects(TaskDB.self)
+        //セル並び替え判断：日付順 or 日付＋カテゴリー抽出
+        if searchWord == "" {
+            sortedRealm = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)
+        } else {
+            sortedRealm = realm.objects(TaskDB.self).filter("category = %@", searchWord!).sorted(byKeyPath: "date", ascending: true)
+        }
+        print(sortedRealm)
+        
         let task = sortedRealm[indexPath.row]
         
         cell.cellTitle.text = task.title
@@ -93,6 +111,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return cell
     }
+    
+    //検索ボタンをクリックしたとき実行
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        //キーボードを閉じる
+        view.endEditing(true)
+        searchWord = searchBar.text
+        self.tableView.reloadData()
+    }
+    
+//    func searchResults(keyword: String) -> Results<TaskDB> {
+//        var searchResults = realm.objects(TaskDB.self)
+//        searchResults = realm.objects(TaskDB.self).filter("category = searchWord")
+//        return searchResults
+//    }
+    
+    
+    
+    
     
     //セルを右から左へスワイプしたときに削除ボタンを表示させ、タップすると削除する。
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -117,15 +153,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    //検索ボタンをクリックしたとき実行
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //キーボードを閉じる
-        view.endEditing(true)
-        searchWord = searchBar.text
-        print(searchWord)
-        
-        //func tableviewを呼び出す？引数はsearchWord? override or extension ?
-    }
+  
     
     
 }
