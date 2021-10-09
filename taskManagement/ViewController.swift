@@ -13,6 +13,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     //Realmから受け取るデータを入れる変数を準備
     var realm = try! Realm()
+    //var sortedRealm = try! Realm().objects(TaskDB.self)
     var searchWord: String? = ""
     
 //    //検索バーのテキスト格納用変数
@@ -51,9 +52,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         view.endEditing(true)
         //タップしたセルの行番号を出力
         print("\(indexPath.row)番目の行が選択されました")
- 
-        //タップしたセルのtaskIDを取得(日付順に並び替える）
-        let taskID = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)[indexPath.row].taskID
+        
+        //タスクの並び替え、フィルター
+        let sortedRealm: Results<TaskDB> = sortedList(keyword: searchWord)
+        let taskID = sortedRealm[indexPath.row].taskID
         print(String(describing: taskID))
         
         //タスク詳細画面に遷移。引数にtaskIDを指定
@@ -90,15 +92,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //セルの再利用を行う。
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TaskListCell
-        
-        var sortedRealm = realm.objects(TaskDB.self)
-        //セル並び替え判断：日付順 or 日付＋カテゴリー抽出
-        if searchWord == "" {
-            sortedRealm = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)
-        } else {
-            sortedRealm = realm.objects(TaskDB.self).filter("category = %@", searchWord!).sorted(byKeyPath: "date", ascending: true)
-        }
-        print(sortedRealm)
+        //タスクの並び替え、フィルター
+        let sortedRealm: Results<TaskDB> = sortedList(keyword: searchWord)
         
         let task = sortedRealm[indexPath.row]
         
@@ -120,23 +115,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.reloadData()
     }
     
-//    func searchResults(keyword: String) -> Results<TaskDB> {
-//        var searchResults = realm.objects(TaskDB.self)
-//        searchResults = realm.objects(TaskDB.self).filter("category = searchWord")
-//        return searchResults
-//    }
-    
-    
-    
-    
+    //タスク一覧の並び替えとカテゴリーフィルター機能
+    func sortedList(keyword: String?) -> Results<TaskDB> {
+        var sortedRealm = realm.objects(TaskDB.self)
+        //セル並び替え判断：日付順 or 日付＋カテゴリー抽出
+        if searchWord == "" {
+            sortedRealm = realm.objects(TaskDB.self).sorted(byKeyPath: "date", ascending: true)
+        } else {
+            sortedRealm = realm.objects(TaskDB.self).filter("category = %@", searchWord!).sorted(byKeyPath: "date", ascending: true)
+        }
+        return sortedRealm
+    }
     
     //セルを右から左へスワイプしたときに削除ボタンを表示させ、タップすると削除する。
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "削除") {(action, view, completionHandler) in
             //削除処理を記述
             do {
-                //タップしたセルのtaskを取得し削除
-                let task: TaskDB = self.realm.objects(TaskDB.self)[indexPath.row]
+                //タスクの並び替え、フィルター
+                let sortedRealm: Results<TaskDB> = self.sortedList(keyword: self.searchWord)
+                let task: TaskDB = sortedRealm[indexPath.row]
+                
                 try self.realm.write{
                     self.realm.delete(task)
                 }
@@ -152,9 +151,5 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return UISwipeActionsConfiguration(actions: [deleteAction])
         
     }
-    
-  
-    
-    
 }
 
