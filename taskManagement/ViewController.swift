@@ -21,17 +21,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //タスク一覧紐付け
     @IBOutlet weak var tableView: UITableView!
-    //タスク入力画面へ遷移
-    @IBAction func inputTaskButtonAction(_ sender: Any) {
-        //タスク新規作成時はtaskID = 0。
-        let taskID: Int = 0
-        //画面遷移を行う(データ渡すときにnilを変更する。）
-        performSegue(withIdentifier: "goTaskInput", sender: taskID)
-    }
+   
     //検索バー
     @IBOutlet weak var searchText: UISearchBar!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +32,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         searchText.delegate = self
         searchText.placeholder = "カテゴリーを入力してください"
     }
-    
+   
     //viewWillAppearは遷移されるたびに実行されるのでここでtableViewを再読み込みする。
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
 
+    //タスク入力画面へ遷移
+    @IBAction func inputTaskButtonAction(_ sender: Any) {
+        //タスク新規作成時はtaskID = 0。
+        let taskID: Int = 0
+        //画面遷移を行う(データ渡すときにnilを変更する。）
+        performSegue(withIdentifier: "goTaskInput", sender: taskID)
+    }
+    
     //タップした行を更新
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //キーボードを閉じる（検索バー触るとキーボードが出てる状態になるため）

@@ -31,16 +31,8 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     //モデルクラス（taskDB)をインスタンス化
     let taskDB: TaskDB = TaskDB()
     
-    //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return realm.objects(TaskDB.self).count
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         //Text Fieldのdelegate通知先を設定 (後でキーボードを下げるときに利用するため）
         titleText.delegate = self       //タイトル
         contentText.delegate = self     //内容
@@ -61,9 +53,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             titleText.text = selectedData[0].title
             contentText.text = selectedData[0].content
             categoryText.text = selectedData[0].category
-            
         }
-        
     }
 
     //保存ボタン押下時アクション
@@ -92,7 +82,6 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.category = category
         }
         
-        
         //タスク新規作成時はタスクIDを新規採番する。
         if taskID == 0 {
             //データ数取得
@@ -114,13 +103,14 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         try! realm.write {
             realm.add(taskDB, update: .modified)
         }
-        
         //前画面に戻る
         _ = navigationController?.popViewController(animated: true)
-        
     }
     
-    
+    //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return realm.objects(TaskDB.self).count
+    }
     
     //テキストフィールドに入力完了したときに実行（タイトル、内容、カテゴリー）
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -134,7 +124,4 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
-    
-
-    
 }
