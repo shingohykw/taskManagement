@@ -22,10 +22,10 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var contentText: UITextField!
     //カテゴリー入力フィールド
     @IBOutlet weak var categoryText: UITextField!
+    //保存ボタン
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
-    //アクティブなテキストフィールドを判断 ****テキストフィールドのスクロールで追加
-    //var textActiveField = UITextField()
-    
+   
     //Realmデータベースを取得
     let realm = try! Realm()
     //モデルクラス（taskDB)をインスタンス化
@@ -37,9 +37,6 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         titleText.delegate = self       //タイトル
         contentText.delegate = self     //内容
         categoryText.delegate = self    //カテゴリー
-        
-        //テキストボックス以外の場所をタップしたときにキーボードを閉じる。
-        setDismissKeyboard()
         
         //タスク一覧画面で選んだセルのタスクIDを取得
         let taskID: Int = taskDB.taskID
@@ -54,6 +51,9 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             contentText.text = selectedData[0].content
             categoryText.text = selectedData[0].category
         }
+        //テキストボックス以外の場所をタップしたときにキーボードを閉じる。
+        setDismissKeyboard()
+        
     }
 
     //保存ボタン押下時アクション
@@ -67,10 +67,14 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             taskDB.date = date
         
         //タスクタイトル取得
-        if let title = titleText.text {
-            print(title)
-            taskDB.title = title
+        if titleText.text == "" {
+            return
+        } else {
+            print(titleText.text)
+            taskDB.title = titleText.text!
         }
+        
+        
         //タスク内容取得
         if let content = contentText.text {
             print(content)
@@ -81,6 +85,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             print(category)
             taskDB.category = category
         }
+        
         
         //タスク新規作成時はタスクIDを新規採番する。
         if taskID == 0 {
@@ -95,7 +100,7 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
             //最新のタスクID取得(データ件数が０のときlatestTaskがnilになって実行時エラーになるのを防ぐ）
             let latestTask: TaskDB = realm.objects(TaskDB.self).sorted(byKeyPath: "taskID", ascending: false).first!
             //新規タスクID採番（最新＋１）
-            taskDB.taskID += latestTask.taskID + 1
+            taskDB.taskID = latestTask.taskID + 1
             }
         }
         
@@ -107,21 +112,69 @@ class InputTaskViewController: UIViewController, UITextFieldDelegate {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    //タスク一覧の行数取得　（UITableViewDelegate, UITableViewDataSourceをクラスに指定しなくても良いのはなぜか？？？？
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return realm.objects(TaskDB.self).count
-    }
+ 
     
     //テキストフィールドに入力完了したときに実行（タイトル、内容、カテゴリー）
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //キーボードを閉じる
         textField.resignFirstResponder()
-        
-        //入力された文字をデバッグエリアに表示
-        if let inputedText = textField.text {
-            print(inputedText)
-        }
+        //保存ボタン有効無効切替
+         saveButtonIsEnableOrNot()
         
         return true
     }
+    
+    //保存ボタン有効無効切替判断機能
+    func saveButtonIsEnableOrNot() {
+        //タイトル未入力の場合は保存ボタンは無効
+        if titleText.text == "" {
+            saveButton.isEnabled = false
+        } else {
+            saveButton.isEnabled = true
+        }
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeObserver() //Notificationを画面が消えるときに削除
+    }
+    
+    //Notificationを設定
+    func configureObserver() {
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification,object: nil)
+    }
+    
+    //Notificationを削除
+    func removeObserver() {
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
+    }
+    
+    //キーボードが現れたときに画面全体をずらす
+    @objc func keyboardWillShow(notification: Notification?) {
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = transform
+        })
+    }
+    
+    //キーボードが消えたときに画面を戻す
+    @objc func keyboardWillHide(notification: Notification?) {
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            self.view.transform = CGAffineTransform.identity
+            
+        })
+    }
+    
 }

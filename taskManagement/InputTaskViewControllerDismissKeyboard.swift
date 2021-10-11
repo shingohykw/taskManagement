@@ -14,9 +14,13 @@ extension InputTaskViewController {
         let tapGR: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGR.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapGR)
+        //保存ボタン有効無効切替
+         saveButtonIsEnableOrNot()
     }
     
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
+        //保存ボタン有効無効切替
+         saveButtonIsEnableOrNot()
     }
 }
